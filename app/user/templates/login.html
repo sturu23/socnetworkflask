@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+
+
+
+{% block content %}
+
+    <form action="{{ url_for('user.login') }}" method="post">
+<div class="position-absolute top-50 start-50 translate-middle">
+{{ form.hidden_tag() }}
+
+    {{ form.email.label }} {{ form.email }}<br>
+        <br>
+    {{ form.password.label }} {{ form.password }}<br>
+        <br>
+    {{ form.submit }}
+</div>
+</form>
+{% endblock %}

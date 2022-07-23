@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+
+
+
+{% block content %}
+    <form action="{{ url_for('home.home') }}" method="post">
+    <h1>მთავარი გვერდი</h1>
+    </form>
+    გაიარეთ რეგისტრაცია ან ავტორიზაცია
+
+{% with error = get_flashed_messages() %}
+        {% if error %}
+            {% for er in error %}
+            <div class="alert alert-danger">
+                {{ er }}
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+{% endblock %}

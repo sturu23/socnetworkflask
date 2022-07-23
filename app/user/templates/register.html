@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="{{ url_for('user.register') }}" method="post">
+<div class="position-absolute top-50 start-50 translate-middle">
+    {{ form.hidden_tag() }}
+{{ form.name.label }} {{ form.name }} <br>
+    <br>
+{{ form.email.label }} {{ form.email }} <br>
+    <br>
+{{ form.password.label }} {{ form.password }} <br>
+    <br>
+{{ form.confirm_password.label }} {{ form.confirm_password() }} <br>
+    <br>
+
+
+{{ form.secret.label }} {{ form.secret }} <br>
+    <br>
+    <input type="submit" value="Sign Up"></div>
+    </form>
+    {% with error = get_flashed_messages() %}
+        {% if error %}
+            {% for er in error %}
+            <div class="alert alert-danger">
+                {{ er }}
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% if form.confirm_password.errors %}
+        <div class="alert alert-danger">
+        {{ form.confirm_password.errors[0] }}
+        </div>
+    {% endif %}
+
+</div>
+
+</form>
+
+
+{% endblock %}
