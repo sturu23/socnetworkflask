@@ -3,6 +3,45 @@
 
 {% block content %}
 
-es aris avtorizaciis mere logini
+<div class="w-25 p-3">
+ <div class="position-absolute top-50 start-50 translate-middle-x">
+<input data-bs-toggle="modal" data-bs-target="#exampleModal" type="email" class="form-control" id="exampleFormControlInput1" placeholder="Create Post">
+
+</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Post {{ current_user.username }}</h5>
+
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('auth_home.create') }}" method="post">
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Title</label>
+              {{ form.title(class='form-control') }}
+{#            <input type="text" class="form-control" id="exampleFormControlInput1" name="title" placeholder="Title">#}
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Content</label>
+            {{ form.content(class='form-control') }}
+{#            <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3" style="resize:none" cols="40" placeholder="Text (Optional)"></textarea>#}
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Post</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

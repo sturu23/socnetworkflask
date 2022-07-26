@@ -53,7 +53,7 @@ def login():
         next = request.args.get('next')
 
         if next is None:
-            next = url_for('home.home')
+            next = url_for('auth_home.create')
             flash('არასწორია შეყვანილი ინფორმაცია')
         return redirect(next)
 

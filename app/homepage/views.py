@@ -9,4 +9,4 @@ home_blueprint = Blueprint('home',
 
 @home_blueprint.route('/',methods=['GET','POST'])
 def home():
-    return render_template('auth_home.html')
+    return render_template('home.html')

@@ -11,10 +11,43 @@
 </head>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-        crossorigin="anonymous"></script>
-<nav class="navbar navbar-expand-lg bg-light" style="background-color: white">
+
+
+
+{% if current_user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg bg-light" style="background-color: white">
+    <div class="container-fluid" style="background-color: white">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <nav class="navbar bg-light">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ url_for('auth_home.create') }}" style="background-color: white">
+                        <img src="{{ url_for('static',filename='img/logoo.jpg') }}" alt="photo" width="60" height="60">
+                        სტატიები
+                    </a>
+                </div>
+            </nav>
+    <div class="container">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+            Hi {{ current_user.username }}
+        </button>
+
+        </form>
+        <ul class="dropdown-menu">
+            <img src="..." class="rounded-pill" alt="...">
+            <li><a class="dropdown-item" href="{{ url_for('profile.profile') }}">პროფილი</a></li>
+            <li><a class="dropdown-item" href="#">პარამეტრები</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('user.logout') }}">გამოსვლა</a></li>
+        </ul>
+    </div>
+{% else %}
+    <nav class="navbar navbar-expand-lg bg-light" style="background-color: white">
     <div class="container-fluid" style="background-color: white">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <nav class="navbar bg-light">
@@ -26,50 +59,31 @@
                 </div>
             </nav>
 
-            {% if current_user.is_authenticated %}
-                <div class="container">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                </div>
-
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Hi {{ current_user.username }}
-                    </button>
-
-                    </form>
-                    <ul class="dropdown-menu">
-                        <img src="..." class="rounded-pill" alt="...">
-                        <li><a class="dropdown-item" href="{{ url_for('profile.profile') }}">პროფილი</a></li>
-                        <li><a class="dropdown-item" href="#">პარამეტრები</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('user.logout') }}">გამოსვლა</a></li>
-                    </ul>
-                </div>
-            {% else %}
-
-                <form class="d-flex mx-5" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+            <form class="d-flex mx-5" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
 
 
-
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-5 ">
-                        <span class="border border-primary rounded-pill" style="background-color: #007FFF"><li class="nav-item">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-5 ">
+                        <span class="border border-primary rounded-pill" style="background-color: #007FFF"><li
+                                class="nav-item">
                                 <a style="color: white" class="nav-link" href="{{ url_for('user.register') }}">რეგისტრაცია</a>
                             </li></span>
 
-                    <span class="border border-primary rounded-pill mx-5" ><li class="nav-item">
-                                <a style="color:#007FFF" class="nav-link" href="{{ url_for('user.login') }}">ავტორიზაცია</a>
+                <span class="border border-primary rounded-pill mx-5"><li class="nav-item">
+                                <a style="color:#007FFF" class="nav-link"
+                                   href="{{ url_for('user.login') }}">ავტორიზაცია</a>
                             </li></span>
-                </ul>
-                </div>
-                </div>
-                </div>
-            {% endif %}
+            </ul>
+        </div>
+    </div>
+    </div>
+{% endif %}
 </nav>
 {% block content %}{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
 </body>
 </html>
