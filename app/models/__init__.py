@@ -1,6 +1,7 @@
 from app import db
 from werkzeug.security import  generate_password_hash,check_password_hash
 from flask_login import UserMixin, login_manager
+
 from datetime import datetime
 
 class User(db.Model,UserMixin):
@@ -9,6 +10,7 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
     secret = db.Column(db.String(128))
+    profile_pic = db.Column(db.String(20), nullable=True)
     account_created_time = db.Column(db.DateTime,default=datetime.utcnow)
 
     def __init__(self, username, email, password,secret):
@@ -39,6 +41,7 @@ class Statia(db.Model,UserMixin):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('statia', lazy=True))
+    post_pic = db.Column(db.String(20),nullable=True)
     created_post_date = db.Column(db.DateTime,default=datetime.utcnow)
 
     def __init__(self, title, content,user_id):
