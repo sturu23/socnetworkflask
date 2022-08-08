@@ -13,7 +13,8 @@ class User(db.Model,UserMixin):
     profile_pic = db.Column(db.String(20), nullable=True)
     account_created_time = db.Column(db.DateTime,default=datetime.utcnow)
 
-    def __init__(self, username, email, password,secret):
+    def __init__(self, username, email, password,secret,profile_pic):
+        self.profile_pic = profile_pic
         self.username = username
         self.email = email
         self.password_hash = generate_password_hash(password)

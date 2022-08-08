@@ -17,17 +17,10 @@
 
 {{ form.secret.label }} {{ form.secret }} <br>
     <br>
+
     <input type="submit" value="Sign Up"></div>
     </form>
-    {% with error = get_flashed_messages() %}
-        {% if error %}
-            {% for er in error %}
-            <div class="alert alert-danger">
-                {{ er }}
-            {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
+
 
     {% if form.confirm_password.errors %}
         <div class="alert alert-danger">
