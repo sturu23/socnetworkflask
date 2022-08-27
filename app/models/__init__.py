@@ -38,7 +38,7 @@ class User(db.Model,UserMixin):
 
 class Statia(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), unique=True, nullable=False)
+    title = db.Column(db.String(80), nullable=False)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('statia', lazy=True))
@@ -54,4 +54,20 @@ class Statia(db.Model,UserMixin):
     @classmethod
     def find_statia_by_id(cls,id):
         return cls.query.filter_by(id=id).first()
+
+
+class EditProfile(db.Model,UserMixin):
+    id = db.Column(db.Integer,primary_key= True)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
+    username = db.Column(db.String(50))
+    proffesion = db.Column(db.String(50))
+    skills = db.Column(db.String(20))
+
+
+    def __init__(self,user_id,username,proffesion,skills):
+        self.user_id = user_id
+        self.username = username
+        self.proffesion = proffesion
+        self.skills = skills
+
 

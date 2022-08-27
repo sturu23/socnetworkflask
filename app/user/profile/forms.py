@@ -15,3 +15,8 @@ class UploadPhotoForm(FlaskForm):
 class RemovePhotoForm(FlaskForm):
     submit = SubmitField('Remove')
 
+class UpdateForm(FlaskForm):
+    username = StringField('Name',validators=[DataRequired()])
+    proffesion = StringField('Proffesion',[DataRequired()])
+    skills = StringField('Skills',[DataRequired()])
+    submit = SubmitField('Update')

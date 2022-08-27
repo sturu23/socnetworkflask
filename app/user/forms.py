@@ -3,6 +3,7 @@ import uuid
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from flask_wtf.file import FileField
 
 
 class RegisterForm(FlaskForm):
@@ -28,3 +29,8 @@ class LoginForm(FlaskForm):
 class PasswordReset(FlaskForm):
     secret = StringField('საიდუმლო სიტყვა', validators=[DataRequired(), Length(min=1, max=4)])
     submit = SubmitField('Reset Password')
+
+class UpdateForm(FlaskForm):
+    name = StringField(label='Name',validators=[DataRequired(message='Error'),Length(min=2,max=20)])
+    secret = StringField(label='საიდუმლო სიტყვა', validators=[DataRequired(),Length(min=1, max=4)])
+    photo = FileField('Upload a pic')

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from app.user.profile.forms import UploadPhotoForm, RemovePhotoForm
+from app.user.profile.forms import UploadPhotoForm, RemovePhotoForm,UpdateForm
 from werkzeug.utils import secure_filename
 from app.models import db,User
 import uuid
@@ -15,6 +15,10 @@ profile_blueprint = Blueprint('profile', __name__,template_folder='templates')
 def profile():
     form = UploadPhotoForm()
 
+    user_posts = User.query.filter_by(id=current_user.id).first()
+    user_post = user_posts.statia
+    data = []
+
     if form.validate_on_submit():
         photo = form.photo.data
         photo_secure = secure_filename(photo.filename)
@@ -24,14 +28,24 @@ def profile():
         current_user.photo = photo
         current_user.profile_pic = photo
         db.session.commit()
-
-
         flash('Photo uploaded successfully!')
 
+    for post in user_post:
+        data.append({
+            'id': post.id,
+            'title': post.title,
+            'content': post.content,
+            'user_id': post.user_id,
+            'created_post_date': post.created_post_date,
+        })
+
+    return render_template('profile.html',form=form,user_post=user_post)
+
+@login_required
+def update_profile():
+    form = UpdateForm()
 
 
-    return render_template('profile.html',form=form)
-
-
+    if f
 
 
