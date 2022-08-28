@@ -24,7 +24,7 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField('მეილი', validators=[DataRequired(), Email()])
     password = PasswordField('პაროლი', validators=[DataRequired()])
-    submit = SubmitField('ავტორიზაცია')
+    submit = SubmitField('Login')
 
 class PasswordReset(FlaskForm):
     secret = StringField('საიდუმლო სიტყვა', validators=[DataRequired(), Length(min=1, max=4)])

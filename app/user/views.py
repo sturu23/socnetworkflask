@@ -19,8 +19,10 @@ user_blueprint = Blueprint('user'
 def register():
     form = RegisterForm()
     crud = Crud()
+    print('akvar')
 
     if form.validate_on_submit():
+
         username = form.name.data
         email = form.email.data
         password = form.password.data
@@ -28,11 +30,12 @@ def register():
         secret = form.secret.data
         email2 = User.query.filter_by(email=email).first()
 
+
         if email2:
             flash('მეილი უკვე არსებობს')
             return redirect(url_for('user.register'))
 
-        user = User(username=username,email=email,password=password,secret=secret)
+        user = User(username=username,email=email,password=password,secret=secret,profile_pic='img/defaultavatar.jpg')
         db.session.add(user)
         db.session.commit()
         flash('რეგისტრაცია წარმატებით დასრულდა')

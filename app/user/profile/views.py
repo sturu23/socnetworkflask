@@ -46,6 +46,13 @@ def update_profile():
     form = UpdateForm()
 
 
-    if f
+    if form.validate_on_submit():
+        name = form.name.data
+        proffesion = form.proffesion.data
+        skills = form.skills.data
+
+        print(name,proffesion,skills)
+
+    return render_template('profile.html',form=form)
 
 
