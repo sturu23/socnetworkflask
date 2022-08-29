@@ -41,6 +41,8 @@ def profile():
 
     return render_template('profile.html',form=form,user_post=user_post)
 
+
+
 @login_required
 def update_profile():
     form = UpdateForm()

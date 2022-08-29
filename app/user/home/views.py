@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash
 from flask_login import login_required, current_user
 from app.models import db
-
+from sqlalchemy import desc
 from app.models import Statia
 from app.models import User
 from app.user.home.forms import StatiaForm
@@ -27,7 +27,7 @@ def create():
         db.session.commit()
 
 
-    for i in Statia.query.all():
+    for i in Statia.query.order_by(desc(Statia.id)).all():
         data.append({
 
             'id': i.id,

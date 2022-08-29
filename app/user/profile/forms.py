@@ -20,4 +20,4 @@ class UpdateForm(FlaskForm):
     username = StringField('Name',validators=[DataRequired(), Length(min=2, max=20)])
     proffesion = StringField('Proffesion',validators=[DataRequired(), Length(min=2, max=20)])
     skills = StringField('Skills',validators=[DataRequired(), Length(min=2, max=20)])
-    submit = SubmitField('Update')
+    submit1 = SubmitField('Update')

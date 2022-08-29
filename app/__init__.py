@@ -20,6 +20,5 @@ def create_app(config_file = 'config.py'):
     app.register_blueprint(auth_home_blueprint)
 
 
-
     return app
 
