@@ -25,66 +25,76 @@
     {#</div>#}
     <form action="{{ url_for('profile.profile') }}" enctype="multipart/form-data" method="post">
 
-    <div class="container emp-profile">
-        <form method="post">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-img" style="height: 300px; width: 425px; margin-left:13%;">
-                        {% if current_user.profile_pic == None %}
-                            <img width="100px" height="100px"
-                                 src="{{ url_for('static', filename='img/defaultavatar.jpg') }}" alt="default"
-                                 class="img-circle">
-                        {% else %}
-                            <img width="100px" height="100px"
-                                 src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}"
-                                 class="img-responsive" alt="profile picture">
-                        {% endif %}
-                        <div class="file btn btn-lg btn-primary" style="margin-right:34%">
-                            Change Photo
-                            {{ form.submit }}
+        <div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img" style="height: 300px; width: 425px; margin-left:13%;">
+                            {% if current_user.profile_pic == None %}
+                                <img width="100px" height="100px"
+                                     src="{{ url_for('static', filename='img/defaultavatar.jpg') }}" alt="default"
+                                     class="img-circle">
+                            {% else %}
+                                <img width="100px" height="100px"
+                                     src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}"
+                                     class="img-responsive" alt="profile picture">
+                            {% endif %}
+                            <div class="file btn btn-lg btn-primary" style="margin-right:34%">
+                                Change Photo
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="profile-head">
-                        <h5>
-                            {{ current_user.username }}
-                        </h5>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                            <h5>
+                                {{ current_user.username|capitalize }}
+                            </h5>
+                            <h5 style="color: blue">{{ user_info.proffesion }}</h5>
 
 
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-2">
+                    <div class="col-md-2">
 
-                    <button type="button" class="profile-edit-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Edit Profile
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close">
+                        <button type="button" class="profile-edit-btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            Edit Profile
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close">
 
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
-                                    </button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ uform.hidden_tag() }}
+                                        <h5>Name</h5>
+                                        {{ uform.username(class='form-control' ,placeholder='Edit your name') }}
+                                        <br>
+                                        <h5>Proffesion</h5>
+                                        {{ uform.proffesion(class='form-control' ,placeholder='type your proffesion') }}
+                                        <br>
+                                        <h5>Skills</h5>
+                                        {{ uform.skills(class='form-control' ,placeholder='type your skills') }}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                        {{ uform.submit1(class="btn btn-primary") }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-work">
@@ -93,11 +103,13 @@
                         <a href="">Bootsnipp Profile</a><br/>
                         <a href="">Bootply Profile</a>
                         <p>SKILLS</p>
-                        <a href="">Web Designer</a><br/>
-                        <a href="">Web Developer</a><br/>
-                        <a href="">WordPress</a><br/>
-                        <a href="">WooCommerce</a><br/>
-                        <a href="">PHP, .Net</a><br/>
+
+                        <a href=""></a><br/>
+                        {% for info in user_info.skills.split() %}
+                        <a href="">{{ user_info.skills }}</a><br/>
+                        {% endfor %}
+
+
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -292,8 +304,9 @@
                         </div>
                     </div>
                 </div>
-        </form>
+    </form>
     </div>
-</div>
+    </div>
+    </form>
 
 {% endblock %}
