@@ -2,6 +2,7 @@
 
 
 {% block content %}
+
     <form action="{{ url_for('auth_home.create') }}" method="post">
         <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <input type="text" placeholder="Create Post">
@@ -95,28 +96,19 @@
                                 </div>
                             </div><!--/ cardbox-item -->
                             <div class="cardbox-base">
-                                <ul class="float-right">
-                                    <li><a><i class="fa fa-comments"></i></a></li>
-                                    <li><a><em class="mr-5">12</em></a></li>
-                                    <li><a><i class="fa fa-share-alt"></i></a></li>
-                                    <li><a><em class="mr-3">03</em></a></li>
-                                </ul>
-                                <ul>
-                                    <li><a><i class="fa fa-thumbs-up"></i></a></li>
-                                    <li><a href="#"><img
-                                            src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/3.jpeg"
-                                            class="img-fluid rounded-circle" alt="User"></a></li>
-                                    <li><a href="#"><img
-                                            src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/1.jpg"
-                                            class="img-fluid rounded-circle" alt="User"></a></li>
-                                    <li><a href="#"><img
-                                            src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/5.jpg"
-                                            class="img-fluid rounded-circle" alt="User"></a></li>
-                                    <li><a href="#"><img
-                                            src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/2.jpg"
-                                            class="img-fluid rounded-circle" alt="User"></a></li>
-                                    <li><a><span>242 Likes</span></a></li>
-                                </ul>
+                                {{ post[i].likes|length }}
+                                {% if current_user.id in post[i].likes|map(attribute='user_id')|list %}
+                                <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i class="fa-sharp fa-solid fa-heart"></i></a>
+                                {% else %}
+                                <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i class="fa-regular fa-heart"></i></a>
+                                {% endif %}
+
+
+
+
+
+
+
                             </div><!--/ cardbox-base -->
                             <div class="cardbox-comments">
 			  <span class="comment-avatar float-left">

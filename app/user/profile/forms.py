@@ -8,7 +8,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 
 
 class UploadPhotoForm(FlaskForm):
-    photo = FileField('Upload a photo')
+    photo = FileField('Upload a photo',validators=([DataRequired()]))
     submit2 = SubmitField('Upload')
 
 
@@ -18,7 +18,7 @@ class RemovePhotoForm(FlaskForm):
 
 
 class UpdateForm(FlaskForm):
-    username = StringField('Name',validators=[DataRequired(), Length(min=2, max=20)])
-    proffesion = StringField('Proffesion',validators=[DataRequired(), Length(min=2, max=50)])
-    skills = StringField('Skills',validators=[DataRequired(), Length(min=2, max=100)])
+    username = StringField('Name',validators=[Length(min=2, max=20)])
+    proffesion = StringField('Proffesion',validators=[Length(min=2, max=50)])
+    skills = StringField('Skills',validators=[Length(min=2, max=100)])
     submit1 = SubmitField('Update')

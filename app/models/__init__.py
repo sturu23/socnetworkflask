@@ -1,7 +1,7 @@
 from app import db
 from werkzeug.security import  generate_password_hash,check_password_hash
 from flask_login import UserMixin, login_manager
-
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
 class User(db.Model,UserMixin):
@@ -12,6 +12,8 @@ class User(db.Model,UserMixin):
     secret = db.Column(db.String(128))
     profile_pic = db.Column(db.String(20), nullable=True)
     account_created_time = db.Column(db.DateTime,default=datetime.utcnow)
+    likes = db.relationship('Likes',backref='user',passive_deletes=True)
+    comments = db.relationship('Comments',backref='user',passive_deletes=True)
 
     def __init__(self, username, email, password,secret,profile_pic):
         self.profile_pic = profile_pic
@@ -43,7 +45,9 @@ class Statia(db.Model,UserMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('statia', lazy=True))
     post_pic = db.Column(db.String(20),nullable=True)
-    created_post_date = db.Column(db.DateTime,default=datetime.utcnow)
+    created_post_date = db.Column(db.DateTime(timezone=True),default=datetime.now())
+    likes = db.relationship('Likes', backref='statia', passive_deletes=True)
+    comments = db.relationship('Comments', backref='statia', passive_deletes=True)
 
     def __init__(self, title, content,user_id):
         self.title = title
@@ -70,4 +74,13 @@ class EditProfile(db.Model,UserMixin):
         self.proffesion = proffesion
         self.skills = skills
 
+class Likes(db.Model,UserMixin):
+    id = db.Column(db.Integer,primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete="CASCADE"),nullable=False)
+    post_id = db.Column(db.Integer,db.ForeignKey('statia.id',ondelete="CASCADE"),nullable=False)
 
+class Comments(db.Model,UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    date_created = db.Column(db.DateTime(timezone=True), default=datetime.now())
+    post_id = db.Column(db.Integer, db.ForeignKey('statia.id', ondelete="CASCADE"), nullable=False)

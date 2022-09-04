@@ -25,8 +25,6 @@ def profile():
     user_all = EditProfile.query.filter_by(id=current_user.id).first()
 
 
-
-
     #querys
     data = []
 
@@ -49,7 +47,7 @@ def profile():
         username = uform.username.data
         proffesion = uform.proffesion.data
         skills = uform.skills.data
-        splited_skills = skills.split(',')
+
 
 
         user = EditProfile.query.filter_by(id=current_user.id).first()

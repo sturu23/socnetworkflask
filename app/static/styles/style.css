@@ -102,7 +102,7 @@ body{
 *
 */
 .hero {
-  padding: 6.25rem 0px !important;
+  padding: 2.25rem 0px !important;
   margin: 0px !important;
 }
 .cardbox {
@@ -204,6 +204,11 @@ text-align: center;
     position: relative;
     display: block;
 }
+
+.cardbox-item-text p{
+    margin-left: 20px;
+}
+
 .cardbox .cardbox-item img{
 }
 .img-responsive{
@@ -222,6 +227,7 @@ text-align: center;
 ---------------------------------- */
 .cardbox-base{
  border-bottom: 2px solid #f4f4f4;
+ padding-left:20px;
 }
 .cardbox-base ul{
  margin: 10px 0px 10px 15px!important;
