@@ -61,17 +61,19 @@
                                 </div><!--/ dropdown -->
                                 <div class="media m-0">
                                     <div class="d-flex mr-3">
-                                        <a href="{{ url_for('profile.profile') }}" method="post">
+                                        {#                                        <a href="{{ url_for('profile.profile') }}" method="post">#}
+{#                                                                                {% for pic in pic_data %}#}
+{#                                        {% if pic['profile_pic'] == None %}#}
+{#                                            <img src="{{ url_for('static', filename='img/defaultavatar.jpg') }}"#}
+{#                                                 alt="default" class="img-circle" width="100px" height="100px">#}
+{#                                        {% else %}#}
+{#                                            <img width="200px" height="200px"#}
+{#                                                 src="{{ url_for('static', filename='uploads/' + pic['profile_pic']) }}"#}
+{#                                                 class="img-responsive" alt="profile picture">#}
+{#                                        {% endif %}#}
+{#                                    {% endfor %}#}
 
-                                            {% if current_user.profile_pic == None %}
-                                                <img src="{{ url_for('static', filename='img/defaultavatar.jpg') }}"
-                                                     alt="default" class="img-circle" width="100px" height="100px">
-                                            {% else %}
-                                                <img width="200px" height="200px"
-                                                     src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}"
-                                                     class="img-responsive" alt="profile picture">
-                                            {% endif %}
-                                        </a>
+
                                     </div>
                                     <div class="media-body">
                                         <p class="m-0">
@@ -98,15 +100,12 @@
                             <div class="cardbox-base">
                                 {{ post[i].likes|length }}
                                 {% if current_user.id in post[i].likes|map(attribute='user_id')|list %}
-                                <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i class="fa-sharp fa-solid fa-heart"></i></a>
+                                    <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i
+                                            class="fa-sharp fa-solid fa-heart"></i></a>
                                 {% else %}
-                                <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i class="fa-regular fa-heart"></i></a>
+                                    <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i
+                                            class="fa-regular fa-heart"></i></a>
                                 {% endif %}
-
-
-
-
-
 
 
                             </div><!--/ cardbox-base -->

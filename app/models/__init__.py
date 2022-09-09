@@ -15,12 +15,14 @@ class User(db.Model,UserMixin):
     likes = db.relationship('Likes',backref='user',passive_deletes=True)
     comments = db.relationship('Comments',backref='user',passive_deletes=True)
 
-    def __init__(self, username, email, password,secret,profile_pic):
+    def __init__(self, username, email, password,secret,profile_pic,likes,comments):
         self.profile_pic = profile_pic
         self.username = username
         self.email = email
         self.password_hash = generate_password_hash(password)
         self.secret = secret
+        self.likes = likes
+        self.comments = comments
 
 
     def check_password(self, password):
@@ -40,7 +42,6 @@ class User(db.Model,UserMixin):
 
 class Statia(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), nullable=False)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('statia', lazy=True))
@@ -49,10 +50,13 @@ class Statia(db.Model,UserMixin):
     likes = db.relationship('Likes', backref='statia', passive_deletes=True)
     comments = db.relationship('Comments', backref='statia', passive_deletes=True)
 
-    def __init__(self, title, content,user_id):
+    def __init__(self, title, content,user_id,likes,comments):
         self.title = title
         self.content = content
         self.user_id = user_id
+        self.likes = likes
+        self.comments = comments
+
 
 
     @classmethod

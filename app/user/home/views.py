@@ -16,6 +16,16 @@ def create():
     form = StatiaForm()
     data = []
     post = Statia.query.all()
+    pic_data =[]
+
+
+    # p = Statia.query.filter_by(id=i)
+    # print(p)
+
+    user_pic = User.query.all()
+
+
+
 
     if form.validate_on_submit():
         title = form.title.data
@@ -25,18 +35,26 @@ def create():
         db.session.add(cont)
         db.session.commit()
 
+
     for i in Statia.query.order_by(desc(Statia.id)).all():
         data.append({
 
             'id': i.id,
-            'title': i.title,
             'content': i.content,
             'user_id': i.user_id,
-            'created_post_date': i.created_post_date
-
+            'created_post_date': i.created_post_date,
         })
 
-    return render_template('auth_home.html', form=form, data=data, users=users, post=post)
+    for pic in user_pic:
+        pic_data.append({
+
+            'profile_pic':pic.profile_pic
+        })
+
+
+
+
+    return render_template('auth_home.html', form=form, data=data, users=users, post=post,pic_data=pic_data)
 
 
 @auth_home_blueprint.route('/like-post/<post_id>', methods=['GET'])

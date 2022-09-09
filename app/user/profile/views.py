@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from app.user.profile.forms import UploadPhotoForm, RemovePhotoForm,UpdateForm
 from werkzeug.utils import secure_filename
-from app.models import db,User,EditProfile
+from app.models import db,User,EditProfile,Statia,Likes,Comments
 import uuid
 import os
 
@@ -23,6 +23,7 @@ def profile():
     user_post = user_posts.statia
 
     user_all = EditProfile.query.filter_by(id=current_user.id).first()
+    user_data = Likes.query.filter_by(post_id=current_user.id)
 
 
     #querys
@@ -68,15 +69,41 @@ def profile():
     for post in user_post:
         data.append({
             'id': post.id,
-            'title': post.title,
             'content': post.content,
             'user_id': post.user_id,
+            'likes':post.likes,
+            'comments':post.comments,
             'created_post_date': post.created_post_date,
         })
 
-    return render_template('profile.html',form=form,user_post=user_post,uform=uform,user_info=user_all)
+    return render_template('profile.html',form=form,user_post=user_post,uform=uform,user_info=user_all,user_posts=user_posts,user_data=user_data)
+
+
+
+@profile_blueprint.route('/profile-like-post/<post_id>', methods=['GET'])
+@login_required
+def profile_like(post_id):
+
+    post = Statia.query.filter_by(id=post_id)
+    like = Likes.query.filter_by(user_id=current_user.id,post_id=post_id).first()
 
 
 
 
+    if not post:
+        flash('Post does not exist')
+
+    elif like:
+        db.session.delete(like)
+        db.session.commit()
+    else:
+        likes = Likes(user_id = current_user.id,post_id=post_id)
+        db.session.add(likes)
+        db.session.commit()
+
+
+
+
+
+    return redirect(url_for('profile.profile'))
 
