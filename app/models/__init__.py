@@ -47,6 +47,7 @@ class Statia(db.Model,UserMixin):
     user = db.relationship('User', backref=db.backref('statia', lazy=True))
     post_pic = db.Column(db.String(20),nullable=True)
     created_post_date = db.Column(db.DateTime(timezone=True),default=datetime.now())
+    user_img = db.relationship('User', backref='user')
     likes = db.relationship('Likes', backref='statia', passive_deletes=True)
     comments = db.relationship('Comments', backref='statia', passive_deletes=True)
 
