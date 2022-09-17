@@ -87,5 +87,6 @@ class Likes(db.Model,UserMixin):
 class Comments(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    text = db.Column(db.String(200),nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=datetime.now())
     post_id = db.Column(db.Integer, db.ForeignKey('statia.id', ondelete="CASCADE"), nullable=False)

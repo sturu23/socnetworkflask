@@ -123,8 +123,11 @@
                                alt="..."></a>
 			  </span>
                                 <div class="search">
-                                    <input placeholder="Write a comment" type="text">
-                                    <button><i class="fa fa-camera"></i></button>
+                                    <form action="{{ url_for('auth_home.add_comment',post_id=data[i].id) }}" method="post">
+                                    <input placeholder="Write a comment" type="text" name="text">
+                                    <button type="submit" class="btn btn-primary">Comment</button>
+                                    {{ data[i].comments }}
+                                </form>
                                 </div><!--/. Search -->
                             </div><!--/ cardbox-like -->
 

@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, flash,redirect,url_for
+from flask import Blueprint, render_template, flash,redirect,url_for,request
 from flask_login import login_required, current_user
 from app.models import db
 from sqlalchemy import desc
 from app.models import Statia
-from app.models import User,Likes
+from app.models import User,Likes,Comments
 from app.user.home.forms import StatiaForm
 
 auth_home_blueprint = Blueprint('auth_home', __name__, template_folder='templates')
@@ -24,8 +24,8 @@ def create():
 
     user_pic = Statia.query.all()
 
-    for pic in user_pic:
-        print(pic.user.profile_pic)
+    for com in user_pic:
+        print(com)
 
 
 
@@ -46,6 +46,7 @@ def create():
             'content': i.content,
             'user_id': i.user_id,
             'user_img': i.user.profile_pic,
+            'comment': i.comments,
             'created_post_date': i.created_post_date,
 
         })
@@ -75,5 +76,28 @@ def like(post_id):
         db.session.add(likes)
         db.session.commit()
 
+
+    return redirect(url_for('auth_home.create'))
+
+
+@auth_home_blueprint.route('/add-comment/<post_id>',methods=['POST'])
+def add_comment(post_id):
+
+    text = request.form.get('text')
+
+
+    if not text:
+
+        flash('comment cannot be empty')
+    else:
+        post = Statia.query.filter_by(id=post_id)
+
+        if post:
+            comment = Comments(text=text,user_id=current_user.id,post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()
+
+        else:
+            flash('post does not exist')
 
     return redirect(url_for('auth_home.create'))
