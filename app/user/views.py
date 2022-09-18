@@ -19,7 +19,6 @@ user_blueprint = Blueprint('user'
 def register():
     form = RegisterForm()
     crud = Crud()
-    print('akvar')
 
     if form.validate_on_submit():
 

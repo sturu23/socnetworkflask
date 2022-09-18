@@ -4,35 +4,41 @@
 {% block content %}
 
     <form action="{{ url_for('auth_home.create') }}" method="post">
-    <div style="border: #00C4CF">
-        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            {% if current_user.profile_pic == None %}
-                <img class='rounded-circle' style="margin-left: 21%" height="50px" width="50px" src="{{ url_for('static', filename='img/defaultavatar.jpg') }}" alt="pic"> <input type="text" placeholder="Create Post"  class="rounded-pill border border-info w-50 p-1 position-sticky top-0 start-50 translate-middle-x mt-4"  >
-            {% else %}
-                <img class='rounded-circle' style="margin-left: 21%" height="50px" width="50px" src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}" alt="pic"> <input type="text" placeholder="Create Post"  class="rounded-pill border border-info w-50 p-1 position-sticky top-0 start-50 translate-middle-x mt-4"  >
-            {% endif %}
-        </a>
-    </div>
+        <div style="border: #00C4CF">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                {% if current_user.profile_pic == None %}
+                    <img class='rounded-circle' style="margin-left: 21%" height="50px" width="50px"
+                         src="{{ url_for('static', filename='img/defaultavatar.jpg') }}" alt="pic">
+                    <input type="text" placeholder="Create Post"
+                           class="rounded-pill border border-info w-50 p-1 position-sticky top-0 start-50 translate-middle-x mt-4">
+                {% else %}
+                    <img class='rounded-circle' style="margin-left: 21%" height="50px" width="50px"
+                         src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}" alt="pic">
+                    <input type="text" placeholder="Create Post"
+                           class="rounded-pill border border-info w-50 p-1 position-sticky top-0 start-50 translate-middle-x mt-4">
+                {% endif %}
+            </a>
+        </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog"
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        {{ form.hidden_tag() }}
-                        {{ form.title(class="form-control", placeholder="Title") }}
-                        <br>
-                        {{ form.content(class="form-control", placeholder="Content") }}
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ form.hidden_tag() }}
+                    {{ form.title(class="form-control", placeholder="Title") }}
+                    <br>
+                    {{ form.content(class="form-control", placeholder="Content") }}
+                </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        {{ form.submit(class="btn btn-primary", value="Add Post") }}
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    {{ form.submit(class="btn btn-primary", value="Add Post") }}
                 </div>
             </div>
+        </div>
         </div>
     </form>
     {% for i in range(data|length) %}
@@ -67,7 +73,7 @@
 
                                 <div class="media m-0">
                                     <div class="d-flex mr-3">
-{#                                         <a href="{{ url_for('profile.profile') }}" method="post">#}
+                                        {#                                         <a href="{{ url_for('profile.profile') }}" method="post">#}
 
 
                                         {% if data[i].user_img == None %}
@@ -78,7 +84,6 @@
                                                  src="{{ url_for('static', filename='uploads/' + data[i].user_img) }}"
                                                  class="img-responsive" alt="profile picture">
                                         {% endif %}
-
 
 
                                     </div>
@@ -123,12 +128,26 @@
                                alt="..."></a>
 			  </span>
                                 <div class="search">
-                                    <form action="{{ url_for('auth_home.add_comment',post_id=data[i].id) }}" method="post">
-                                    <input placeholder="Write a comment" type="text" name="text">
-                                    <button type="submit" class="btn btn-primary">Comment</button>
-                                    {{ data[i].comments }}
-                                </form>
+                                    <form action="{{ url_for('auth_home.add_comment',post_id=data[i].id) }}"
+                                          method="post">
+                                        <input placeholder="Write a comment" type="text" name="text">
+                                        <button type="submit" class="btn btn-primary">Comment</button>
+
+                                    </form>
                                 </div><!--/. Search -->
+                                {% if data[i].comment.text %}
+                                <div style="border: #00c6ff 2px solid;display:flex;width: 150%;height: 30%">
+
+                                <img width="30px" height="30px" src="{{ url_for('static', filename='uploads/' + data[i].user_img) }}" class="img-responsive" alt="profile picture">
+                                    <h1 style="font-size: 12px;">{{ data[i].comment.text }}</h1>
+
+                                </div>
+
+                                {% endif %}
+
+
+
+
                             </div><!--/ cardbox-like -->
 
                         </div><!--/ cardbox -->

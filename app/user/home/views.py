@@ -24,8 +24,7 @@ def create():
 
     user_pic = Statia.query.all()
 
-    for com in user_pic:
-        print(com)
+
 
 
 
@@ -40,6 +39,9 @@ def create():
 
 
     for i in Statia.query.order_by(desc(Statia.id)).all():
+
+
+
         data.append({
 
             'id': i.id,
@@ -93,6 +95,7 @@ def add_comment(post_id):
         post = Statia.query.filter_by(id=post_id)
 
         if post:
+            print(text)
             comment = Comments(text=text,user_id=current_user.id,post_id=post_id)
             db.session.add(comment)
             db.session.commit()
