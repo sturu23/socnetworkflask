@@ -9,4 +9,6 @@ class StatiaForm(FlaskForm):
 
     submit = SubmitField('Post')
 
-
+class CommentForm(FlaskForm):
+    text = StringField('comment',validators=[DataRequired()])
+    comment = SubmitField('comment')

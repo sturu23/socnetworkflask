@@ -42,8 +42,7 @@
         </div>
     </form>
     {% for i in range(data|length) %}
-        <link href="https://fonts.googleapis.com/css?family=Rokkitt" rel="stylesheet">
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 
         <!-- ==============================================
         Hero
@@ -78,7 +77,7 @@
 
                                         {% if data[i].user_img == None %}
                                             <img src="{{ url_for('static', filename='img/defaultavatar.jpg') }}"
-                                                 alt="default" class="img-circle" width="100px" height="100px">
+                                                 alt="default" class="img-circle" width="150px" height="150px">
                                         {% else %}
                                             <img width="200px" height="200px"
                                                  src="{{ url_for('static', filename='uploads/' + data[i].user_img) }}"
@@ -99,7 +98,7 @@
 
                                         </p>
                                         <small><span><i
-                                                class="icon ion-md-time"></i>Posted: {{ data[i].created_post_date }}</span></small>
+                                                class="icon ion-md-time"></i>Posted: {{ data[i].created_post_date.date().strftime("%B,%d,%Y") }}</span></small>
                                     </div>
                                 </div><!--/ media -->
                             </div><!--/ cardbox-heading -->
@@ -122,7 +121,7 @@
 
                             </div><!--/ cardbox-base -->
                             <div class="cardbox-comments">
-			  <span class="comment-avatar float-left">
+			                    <span class="comment-avatar float-left">
 			   <a href=""><img class="rounded-circle"
                                src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/6.jpg"
                                alt="..."></a>
@@ -133,30 +132,40 @@
                                         <input placeholder="Write a comment" type="text" name="text">
                                         <button type="submit" class="btn btn-primary">Comment</button>
 
+
+                                        <!--/. Search -->
+
                                     </form>
-                                </div><!--/. Search -->
-                                {% if data[i].comment.text %}
-                                <div style="border: #00c6ff 2px solid;display:flex;width: 150%;height: 30%">
-
-                                <img width="30px" height="30px" src="{{ url_for('static', filename='uploads/' + data[i].user_img) }}" class="img-responsive" alt="profile picture">
-                                    <h1 style="font-size: 12px;">{{ data[i].comment.text }}</h1>
-
-                                </div>
-
-                                {% endif %}
 
 
+                                </div><!--/ cardbox-like -->
+
+                            </div><!--/ cardbox -->
 
 
-                            </div><!--/ cardbox-like -->
+{#                                {{ comments.users.username }}#}
 
-                        </div><!--/ cardbox -->
+                                        {% for comment in data[i].comments %}
+                                            <div style="display:flex;">
+                                            <div style="margin-left: 5px"><img width="30px" height="30px"
+                                                      src="{{ url_for('static', filename='uploads/' + comment.user.profile_pic) }}"
+                                                      class="img-responsive"
+                                                      alt="profile picture"> {{ comment.user.username }}</div>
 
-                    </div><!--/ col-lg-6 -->
+                                            <div style="border: #00c6ff 2px solid;display:inline-block;width: 95%;height: 30%;margin: 15px" >
+                                                <h1 style="font-size: 12px; ">
+                                                    {{ comment.text }}
+                                                   <h1 style="margin-right: 10%;font-size: 8px">Commented: {{ comment.date_created.date().strftime("%B,%d,%Y") }}</h1>
+                                                </h1>
+                                            </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                        </div><!--/ col-lg-6 -->
 
 
-                </div><!--/ row -->
-            </div><!--/ container -->
+                    </div><!--/ row -->
+                </div><!--/ container -->
         </section>
     {% endfor %}
 {% endblock %}
