@@ -20,25 +20,25 @@
             </a>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog"
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    {{ form.hidden_tag() }}
-                    {{ form.title(class="form-control", placeholder="Title") }}
-                    <br>
-                    {{ form.content(class="form-control", placeholder="Content") }}
-                </div>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form.hidden_tag() }}
+                        {#                    {{ form.title(class="form-control", placeholder="Title") }}#}
+                        <br>
+                        {{ form.content(class="form-control", placeholder="Content") }}
+                    </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    {{ form.submit(class="btn btn-primary", value="Add Post") }}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {{ form.submit(class="btn btn-primary", value="Add Post") }}
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </form>
     {% for i in range(data|length) %}
@@ -105,10 +105,11 @@
 
                             <div class="cardbox-item">
                                 <div class="cardbox-item-text">
+
                                     <p>{{ data[i].content }}</p>
                                 </div>
                             </div><!--/ cardbox-item -->
-                            <div class="cardbox-base">
+                            <div class="cardbox-base" style="display: flex">
                                 {{ post[i].likes|length }}
                                 {% if current_user.id in post[i].likes|map(attribute='user_id')|list %}
                                     <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i
@@ -117,6 +118,13 @@
                                     <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i
                                             class="fa-regular fa-heart"></i></a>
                                 {% endif %}
+                                <p style="margin-left: 10px;">
+                                    <a  data-bs-toggle="collapse" href="#collapseExample"
+                                        aria-expanded="false" aria-controls="collapseExample">
+                                       <i class="fa-regular fa-comment"></i>
+                                        View the comments
+                                    </a>
+                                </p>
 
 
                             </div><!--/ cardbox-base -->
@@ -131,10 +139,7 @@
                                           method="post">
                                         <input placeholder="Write a comment" type="text" name="text">
                                         <button type="submit" class="btn btn-primary">Comment</button>
-
-
                                         <!--/. Search -->
-
                                     </form>
 
 
@@ -143,29 +148,49 @@
                             </div><!--/ cardbox -->
 
 
-{#                                {{ comments.users.username }}#}
+                            {#                                {{ comments.users.username }}#}
 
-                                        {% for comment in data[i].comments %}
-                                            <div style="display:flex;">
-                                            <div style="margin-left: 5px"><img width="30px" height="30px"
-                                                      src="{{ url_for('static', filename='uploads/' + comment.user.profile_pic) }}"
-                                                      class="img-responsive"
-                                                      alt="profile picture"> {{ comment.user.username }}</div>
 
-                                            <div style="border: #00c6ff 2px solid;display:inline-block;width: 95%;height: 30%;margin: 15px" >
-                                                <h1 style="font-size: 12px; ">
-                                                    {{ comment.text }}
-                                                   <h1 style="margin-right: 10%;font-size: 8px">Commented: {{ comment.date_created.date().strftime("%B,%d,%Y") }}</h1>
-                                                </h1>
+                            {% for comment in data[i].comments %}
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+                                        <div class='container'>
+                                            <div class="media comment-box">
+                                                <div class="media-left">
+                                                    <a href="#">
+                                                        <img width="18px" height="18px"
+                                                             src="{{ url_for('static', filename='uploads/' + comment.user.profile_pic) }}"
+                                                             class="img-responsive"
+                                                             alt="profile picture">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+
+                                                    <h2 style="font-size: 15px;display: flex" class="media-heading">{{ comment.user.username|capitalize }}
+                                                        <div style="margin-left: 45%">Commented: {{ comment.date_created.date().strftime("%B,%d,%Y") }}</div>
+
+                                                    </h2>
+                                                    <p style="color: black;font-family: Georgia;font-size: 15px">{{ comment.text }}</p>
+                                                </div>
                                             </div>
-                                            </div>
-                                        {% endfor %}
+                                        </div>
                                     </div>
-                        </div><!--/ col-lg-6 -->
+                                </div>
 
 
-                    </div><!--/ row -->
-                </div><!--/ container -->
+
+
+
+
+
+                            {% endfor %}
+                        </div>
+                    </div><!--/ col-lg-6 -->
+
+
+                </div><!--/ row -->
+            </div><!--/ container -->
         </section>
+
     {% endfor %}
 {% endblock %}

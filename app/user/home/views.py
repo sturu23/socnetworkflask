@@ -18,11 +18,6 @@ def create():
     post = Statia.query.all()
     comments = Comments.query.all()
 
-    for comment in comments:
-        print(comment.user.profile_pic)
-
-
-
 
 
     if form.validate_on_submit():

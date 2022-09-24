@@ -8,21 +8,6 @@
 
 
 
-    {#<div class="position-absolute top-50 start-50 translate-middle">#}
-    {#მოგესალმებით თქვენს პროფილზე <br>#}
-    {#    <br>#}
-    {##}
-    {#<ul class="list-group" >#}
-    {##}
-    {#  <li class="list-group-item">სახელი: {{ current_user.username }}</li>#}
-    {#  <li class="list-group-item">მეილი: {{ current_user.email }}</li>#}
-    {#  <li class="list-group-item">საიდუმლო სიტყვა: {{ current_user.secret }}</li>#}
-    {##}
-    {##}
-    {#</ul>#}
-    {##}
-    {##}
-    {#</div>#}
     <form action="{{ url_for('profile.profile') }}" enctype="multipart/form-data" method="post">
 
         <div class="container emp-profile">
@@ -108,14 +93,13 @@
                         <a href="">Bootsnipp Profile</a><br/>
                         <a href="">Bootply Profile</a>
                         <p>SKILLS</p>
-
+                        {% if user_info.skills %}
                         {% for info in user_info.skills.split() %}
                             <ul>
                             <li><a href="">{{ user_info.skills }}</a><br/></li>
-
                             </ul>
-
                         {% endfor %}
+                        {% endif %}
 
 
                     </div>
