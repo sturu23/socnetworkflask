@@ -72,7 +72,6 @@
 
                                 <div class="media m-0">
                                     <div class="d-flex mr-3">
-                                        {#                                         <a href="{{ url_for('profile.profile') }}" method="post">#}
 
 
                                         {% if data[i].user_img == None %}
@@ -119,11 +118,20 @@
                                             class="fa-regular fa-heart"></i></a>
                                 {% endif %}
                                 <p style="margin-left: 10px;">
-                                    <a  data-bs-toggle="collapse" href="#collapseExample"
+                                    {% if data[i].comments|length > 0 %}
+                                        {{ data[i].comments|length }}
+                                        <a  data-bs-toggle="collapse" href="#comments-{{ data[i].id }}"
                                         aria-expanded="false" aria-controls="collapseExample">
                                        <i class="fa-regular fa-comment"></i>
                                         View the comments
                                     </a>
+                                    {% else %}
+                                    {{ data[i].comments|length }}
+                                    <i class="fa-regular fa-comment"></i>
+                                    <a href="">No Comments</a>
+                                    {% endif %}
+
+
                                 </p>
 
 
@@ -148,11 +156,11 @@
                             </div><!--/ cardbox -->
 
 
-                            {#                                {{ comments.users.username }}#}
+
 
 
                             {% for comment in data[i].comments %}
-                                <div class="collapse" id="collapseExample">
+                                <div class="collapse" id="comments-{{ data[i].id }}">
                                     <div class="card card-body">
                                         <div class='container'>
                                             <div class="media comment-box">
