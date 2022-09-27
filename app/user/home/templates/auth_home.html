@@ -112,7 +112,8 @@
                                 {{ post[i].likes|length }}
                                 {% if current_user.id in post[i].likes|map(attribute='user_id')|list %}
                                     <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i
-                                            class="fa-sharp fa-solid fa-heart"></i></a>
+                                            class="fa-sharp fa-solid fa-heart"></i>
+                                    </a>
                                 {% else %}
                                     <a href="{{ url_for('auth_home.like', post_id=post[i].id) }}"><i
                                             class="fa-regular fa-heart"></i></a>
@@ -120,16 +121,16 @@
                                 <p style="margin-left: 10px;">
                                     {% if data[i].comments|length > 0 %}
                                         {{ data[i].comments|length }}
-                                        <a  data-bs-toggle="collapse" href="#comments-{{ data[i].id }}"
-                                        aria-expanded="false" aria-controls="collapseExample">
-                                       <i class="fa-regular fa-comment"></i>
-                                        View the comments
-                                    </a>
+                                        <a data-bs-toggle="collapse" href="#comments-{{ data[i].id }}"
+                                           aria-expanded="false" aria-controls="collapseExample">
+                                            <i class="fa-regular fa-comment"></i>
+                                            Comments
+                                        </a>
                                     {% else %}
-                                    {{ data[i].comments|length }}
-                                    <a href="">
-                                    <i class="fa-regular fa-comment"></i>
-                                    No Comments</a>
+                                        {{ data[i].comments|length }}
+                                        <a href="">
+                                            <i class="fa-regular fa-comment"></i>
+                                            No Comments</a>
                                     {% endif %}
 
 
@@ -174,24 +175,37 @@
                                                     </a>
                                                 </div>
                                                 <div class="media-body">
+                                                    <h2 style="font-size: 15px;display: flex"
+                                                        class="media-heading">{{ comment.user.username|capitalize }}
+                                                        <div style="margin-left: 40%;display: flex;">
+                                                            Commented: {{ comment.date_created.date().strftime("%B,%d,%Y") }}
+                                                            {% if current_user.id == data[i].user_id or current_user.id == comment.user.id %}
+                                                                <div class="dropdown" >
+                                                                    <a class="btn btn-secondary dropdown-toggle" href="#"
+                                                                       role="button" data-bs-toggle="dropdown"
+                                                                       aria-expanded="false">
+                                                                        Dropdown link
+                                                                    </a>
 
-                                                    <h2 style="font-size: 15px;display: flex" class="media-heading">{{ comment.user.username|capitalize }}
-                                                        <div style="margin-left: 45%">Commented: {{ comment.date_created.date().strftime("%B,%d,%Y") }}</div>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li><a class="dropdown-item" href="{{ url_for('auth_home.edit_comment',comment_id=comment.id) }}">Edit Comment</a>
+                                                                        </li>
+                                                                        <li><a class="dropdown-item" href="{{ url_for('auth_home.delete_comment',comment_id=comment.id) }}">Delete Comment
+                                                                            </a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            {% endif %}
+
+
+                                                        </div>
 
                                                     </h2>
-                                                    <p style="color: black;font-family: Georgia;font-size: 15px">{{ comment.text }}</p>
+                                                    <p style="color: black;font-family: Georgia,serif;font-size: 15px">{{ comment.text }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-
-
-
                             {% endfor %}
                         </div>
                     </div><!--/ col-lg-6 -->
