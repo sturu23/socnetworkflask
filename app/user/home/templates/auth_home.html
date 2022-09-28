@@ -23,7 +23,9 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Post
+                            <img class='rounded-circle' style='height: 50px;width: 50px' src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}" alt="pic">
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -35,7 +37,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        {{ form.submit(class="btn btn-primary", value="Add Post") }}
+                        {{ form.submit(class="btn btn-primary", value="Post") }}
                     </div>
                 </div>
             </div>
@@ -58,11 +60,11 @@
                             <div class="cardbox-heading">
                                 <!-- START dropdown-->
                                 <div class="dropdown float-right">
-                                    <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown"
+                                    <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" data-target="collapse"
                                             aria-expanded="false">
                                         <em class="fa fa-ellipsis-h"></em>
                                     </button>
-                                    <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu"
+                                    <div id="collapse" class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu"
                                          style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
                                         <a class="dropdown-item" href="#">Hide post</a>
                                         <a class="dropdown-item" href="#">Stop following</a>
@@ -140,15 +142,13 @@
                             </div><!--/ cardbox-base -->
                             <div class="cardbox-comments">
 			                    <span class="comment-avatar float-left">
-			   <a href=""><img class="rounded-circle"
-                               src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/6.jpg"
-                               alt="..."></a>
+
 			  </span>
                                 <div class="search">
-                                    <form action="{{ url_for('auth_home.add_comment',post_id=data[i].id) }}"
+                                    <form action="{{ url_for('auth_home.add_comment',post_id=data[i].id) }}" class="add-comment-form"
                                           method="post">
-                                        <input placeholder="Write a comment" type="text" name="text">
-                                        <button type="submit" class="btn btn-primary">Comment</button>
+                                        <input placeholder="Write a comment" type="text" name="text" autocomplete="off">
+                                        <button type="submit" class="comment-button">Comment</button>
                                         <!--/. Search -->
                                     </form>
 
@@ -175,31 +175,40 @@
                                                     </a>
                                                 </div>
                                                 <div class="media-body">
-                                                    <h2 style="font-size: 15px;display: flex"
-                                                        class="media-heading">{{ comment.user.username|capitalize }}
-                                                        <div style="margin-left: 40%;display: flex;">
-                                                            Commented: {{ comment.date_created.date().strftime("%B,%d,%Y") }}
-                                                            {% if current_user.id == data[i].user_id or current_user.id == comment.user.id %}
-                                                                <div class="dropdown" >
-                                                                    <a class="btn btn-secondary dropdown-toggle" href="#"
-                                                                       role="button" data-bs-toggle="dropdown"
-                                                                       aria-expanded="false">
-                                                                        Dropdown link
-                                                                    </a>
+                                                    <div style="font-size: 15px;display: flex"
+                                                        class="media-heading">
+                                                    <div class="flex-column">
+                                                        <h6>{{ comment.user.username|capitalize }}</h6>
+                                                        <small>
+                                                            Commented: {{ comment.date_created.date().strftime("%B/%d/%Y") }}
 
-                                                                    <ul class="dropdown-menu">
-                                                                        <li><a class="dropdown-item" href="{{ url_for('auth_home.edit_comment',comment_id=comment.id) }}">Edit Comment</a>
-                                                                        </li>
-                                                                        <li><a class="dropdown-item" href="{{ url_for('auth_home.delete_comment',comment_id=comment.id) }}">Delete Comment
-                                                                            </a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            {% endif %}
+                                                        </small>
+                                                    </div>
+                                                    {% if current_user.id == data[i].user_id or current_user.id == comment.user.id %}
+                                                            <div class="dropdown">
+                                                                <a class="btn btn-secondary dropdown-toggle d-flex justify-content-center align-items-center"
+                                                                   href="#"
+                                                                   role="button" data-bs-toggle="dropdown"
+                                                                   aria-expanded="false">
+
+                                                                </a>
+
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a class="dropdown-item"
+                                                                           href="{{ url_for('auth_home.edit_comment',comment_id=comment.id) }}">Edit
+                                                                        Comment</a>
 
 
-                                                        </div>
 
-                                                    </h2>
+                                                                    </li>
+                                                                    <li><a class="dropdown-item"
+                                                                           href="{{ url_for('auth_home.delete_comment',comment_id=comment.id) }}">Delete
+                                                                        Comment
+                                                                    </a></li>
+                                                                </ul>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
                                                     <p style="color: black;font-family: Georgia,serif;font-size: 15px">{{ comment.text }}</p>
                                                 </div>
                                             </div>

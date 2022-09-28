@@ -105,7 +105,7 @@ def delete_comment(comment_id):
 def edit_comment(comment_id):
     comment = Comments.query.filter_by(id=comment_id).first()
 
-    updated_text = request.form.get('text')
+    updated_text = request.form.get('updated-text')
 
     if not updated_text:
         flash('comment does not exists')
