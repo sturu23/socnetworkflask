@@ -71,6 +71,7 @@ def profile():
             'id': post.id,
             'content': post.content,
             'user_id': post.user_id,
+            'user_img':post.user_img,
             'likes':post.likes,
             'comments':post.comments,
             'created_post_date': post.created_post_date,
