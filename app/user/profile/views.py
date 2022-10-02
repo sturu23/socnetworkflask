@@ -102,9 +102,20 @@ def profile_like(post_id):
         db.session.add(likes)
         db.session.commit()
 
-
-
-
-
     return redirect(url_for('profile.profile'))
+
+
+@profile_blueprint.route('/user-profile/<user_id>')
+def user_profile(user_id):
+    user = User.query.filter_by(id=user_id)
+    post = Statia.query.filter_by(id=user_id)
+    profile = EditProfile.query.filter_by(id=user_id)
+
+    for i in user:
+        print(i.username)
+
+
+
+    return render_template('user_profile.html',posts=post,users=user,profile=profile)
+
 

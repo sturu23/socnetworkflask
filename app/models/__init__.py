@@ -14,6 +14,7 @@ class User(db.Model,UserMixin):
     account_created_time = db.Column(db.DateTime,default=datetime.utcnow)
     likes = db.relationship('Likes',backref='user',passive_deletes=True)
     comments = db.relationship('Comments',backref='user',passive_deletes=True)
+    post = db.relationship('Statia',backref='user_info',passive_deletes=True)
 
     def __init__(self, username, email, password,secret,profile_pic,likes,comments):
         self.profile_pic = profile_pic
@@ -51,11 +52,10 @@ class Statia(db.Model,UserMixin):
     likes = db.relationship('Likes', backref='statia', passive_deletes=True)
     comments = db.relationship('Comments', backref='statia',uselist=True, passive_deletes=True)
 
-    def __init__(self, title, content,user_id,comments):
-        self.title = title
+    def __init__(self,content,user_id):
         self.content = content
         self.user_id = user_id
-        self.comments = comments
+
 
 
 

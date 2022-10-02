@@ -19,10 +19,9 @@ def create():
     comments = Comments.query.all()
 
     if form.validate_on_submit():
-        title = form.title.data
         content = form.content.data
         user_id = current_user.id
-        cont = Statia(title=title, content=content, user_id=user_id)
+        cont = Statia(content=content, user_id=user_id)
         db.session.add(cont)
         db.session.commit()
 
@@ -35,11 +34,41 @@ def create():
             'user_id': i.user_id,
             'user_img': i.user.profile_pic,
             'comments': i.comments,
+            'likes': i.likes,
             'created_post_date': i.created_post_date,
 
         })
 
+
     return render_template('auth_home.html', form=form, data=data, users=users, post=post, comments=comments)
+
+
+@auth_home_blueprint.route('/delete-post/<post_id>', methods=['GET'])
+def delete_post(post_id):
+    post = Statia.query.filter_by(id=post_id)
+
+    if not post:
+        flash('post does not exists')
+    else:
+        for info in post:
+            db.session.delete(info)
+            db.session.commit()
+
+    return redirect(url_for('auth_home.create'))
+
+
+@auth_home_blueprint.route('/edit-post/<post_id>', methods=['GET'])
+def edit_post(post_id):
+    post = Statia.query.filter_by(id=post_id)
+
+    update_text = request.args.get('updated_text')
+
+    if not post:
+        flash('post does not exists')
+    else:
+        post.content = update_text
+        db.session.commit()
+    return redirect(url_for('auth_home.create'))
 
 
 @auth_home_blueprint.route('/like-post/<post_id>', methods=['GET'])

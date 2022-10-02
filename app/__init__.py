@@ -10,7 +10,7 @@ def create_app(config_file = 'config.py'):
     migrate.init_app(app, db,render_as_batch=True)
     login_manager.init_app(app)
     login_manager.login_view = 'user.login'
-    from app.user.views import user_blueprint
+    from app.user.login.views import user_blueprint
     app.register_blueprint(user_blueprint)
     from app.homepage.views import home_blueprint
     app.register_blueprint(home_blueprint)

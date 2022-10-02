@@ -8,7 +8,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 
 
 class UploadPhotoForm(FlaskForm):
-    photo = FileField('Upload a photo',validators=([DataRequired()]))
+    photo = FileField('Upload a photo')
     submit2 = SubmitField('Upload')
 
 
