@@ -25,7 +25,7 @@ def profile():
     user_all = EditProfile.query.filter_by(id=current_user.id).first()
     user_data = Likes.query.filter_by(post_id=current_user.id)
 
-
+    skills_data=[]
     #querys
     data = []
 
@@ -48,6 +48,11 @@ def profile():
         username = uform.username.data
         proffesion = uform.proffesion.data
         skills = uform.skills.data
+
+        for skill in skills:
+            skills_data.append({
+                'skills':skill.skills.split(',')
+            })
 
 
 
@@ -108,14 +113,17 @@ def profile_like(post_id):
 @profile_blueprint.route('/user-profile/<user_id>')
 def user_profile(user_id):
     user = User.query.filter_by(id=user_id)
-    post = Statia.query.filter_by(id=user_id)
-    profile = EditProfile.query.filter_by(id=user_id)
+    post = Statia.query.filter_by(user_id=user_id)
+    user_info = EditProfile.query.filter_by(user_id=user_id)
 
-    for i in user:
-        print(i.username)
+    dat = []
 
+    for i in user_info:
+        dat.append({
+            'skills':i.skills.split(',')
+        })
 
-
-    return render_template('user_profile.html',posts=post,users=user,profile=profile)
+    print(dat)
+    return render_template('user_profile.html',posts=post,users=user,user_info=user_info)
 
 

@@ -57,16 +57,17 @@ def delete_post(post_id):
     return redirect(url_for('auth_home.create'))
 
 
-@auth_home_blueprint.route('/edit-post/<post_id>', methods=['GET'])
+@auth_home_blueprint.route('/edit-post/<post_id>', methods=['POST'])
 def edit_post(post_id):
-    post = Statia.query.filter_by(id=post_id)
+    post = Statia.query.filter_by(id=post_id).first()
 
-    update_text = request.args.get('updated_text')
+    update_text = request.form['updated']
 
     if not post:
         flash('post does not exists')
     else:
         post.content = update_text
+        post.edited = True
         db.session.commit()
     return redirect(url_for('auth_home.create'))
 
@@ -129,17 +130,19 @@ def delete_comment(comment_id):
     return redirect(url_for('auth_home.create'))
 
 
-@auth_home_blueprint.route('/edit-comment/<comment_id>', methods=['GET'])
+@auth_home_blueprint.route('/edit-comment/<comment_id>', methods=['POST'])
 @login_required
 def edit_comment(comment_id):
     comment = Comments.query.filter_by(id=comment_id).first()
 
     updated_text = request.form.get('updated-text')
 
+
     if not updated_text:
         flash('comment does not exists')
     else:
         comment.text = updated_text
+        comment.edited = True
         db.session.commit()
 
     return redirect(url_for('auth_home.create'))

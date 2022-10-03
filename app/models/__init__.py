@@ -14,7 +14,7 @@ class User(db.Model,UserMixin):
     account_created_time = db.Column(db.DateTime,default=datetime.utcnow)
     likes = db.relationship('Likes',backref='user',passive_deletes=True)
     comments = db.relationship('Comments',backref='user',passive_deletes=True)
-    post = db.relationship('Statia',backref='user_info',passive_deletes=True)
+    post = db.relationship('Statia',backref='post',passive_deletes=True)
 
     def __init__(self, username, email, password,secret,profile_pic,likes,comments):
         self.profile_pic = profile_pic
@@ -45,16 +45,17 @@ class Statia(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('statia', lazy=True))
     post_pic = db.Column(db.String(20),nullable=True)
     created_post_date = db.Column(db.DateTime(timezone=True),default=datetime.now())
+    edited = db.Column(db.Boolean, unique=False)
     user_img = db.relationship('User', backref='user')
     likes = db.relationship('Likes', backref='statia', passive_deletes=True)
     comments = db.relationship('Comments', backref='statia',uselist=True, passive_deletes=True)
-
-    def __init__(self,content,user_id):
+    user = db.relationship('User', backref=db.backref('statia', lazy=True))
+    def __init__(self,content,user_id,edited):
         self.content = content
         self.user_id = user_id
+        self.edited = edited
 
 
 
@@ -90,6 +91,7 @@ class Comments(db.Model,UserMixin):
     text = db.Column(db.String(200),nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=datetime.now())
     post_id = db.Column(db.Integer, db.ForeignKey('statia.id', ondelete="CASCADE"), nullable=False)
+    edited = db.Column(db.Boolean,unique=False)
     user_picture = db.relationship('User',backref='users',lazy=True)
 
     # def __init__(self,text,date_created,user_id,post_id):

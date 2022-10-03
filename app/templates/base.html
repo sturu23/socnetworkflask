@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
 
     <script src="https://kit.fontawesome.com/b6255e648f.js" crossorigin="anonymous"></script>
 
@@ -23,7 +23,8 @@
             <nav class="navbar bg-light">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url_for('auth_home.create') }}" style="background-color: white">
-                        <img src="{{ url_for('static',filename='img/Capture.PNG') }}" alt="photo" width="80" height="80">
+                        <img src="{{ url_for('static',filename='img/Capture.PNG') }}" alt="photo" width="80"
+                             height="80">
 
                     </a>
                 </div>
@@ -31,55 +32,55 @@
         </div>
 
 
+        <div class="container">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn" style="color: white !important;" type="submit">Search</button>
+        </div>
 
-    <div class="container">
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn" style="color: white !important;" type="submit">Search</button>
-    </div>
+        <div class="dropdown">
+            <button class="btn gacentrili btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Hi {{ current_user.username }}
+            </button>
 
-    <div class="dropdown">
-        <button class="btn gacentrili btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-            Hi {{ current_user.username }}
-        </button>
+            </form>
+            <ul class="dropdown-menu">
 
-        </form>
-        <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ url_for('profile.profile') }}">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('user.logout') }}">Log out</a></li>
+            </ul>
+        </div>
+        {% else %}
+        <nav class="navbar navbar-expand-lg bg-light" style="background-color: white">
+            <div class="container-fluid" style="background-color: white">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <nav class="navbar bg-light">
+                        <div class="container">
+                            <a class="navbar-brand" href="{{ url_for('home.home') }}" style="background-color: white">
+                                <img src="{{ url_for('static',filename='img/Capture.PNG') }}" alt="photo" width="80"
+                                     height="80">
 
-            <li><a class="dropdown-item" href="{{ url_for('profile.profile') }}">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('user.logout') }}">Log out</a></li>
-        </ul>
-    </div>
-{% else %}
-    <nav class="navbar navbar-expand-lg bg-light" style="background-color: white">
-    <div class="container-fluid" style="background-color: white">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <nav class="navbar bg-light">
-                <div class="container">
-                    <a class="navbar-brand" href="{{ url_for('home.home') }}" style="background-color: white">
-                        <img src="{{ url_for('static',filename='img/Capture.PNG') }}" alt="photo" width="80" height="80">
-
-                    </a>
-                </div>
-            </nav>
+                            </a>
+                        </div>
+                    </nav>
 
 
-
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-5 ">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-5 ">
                         <span class="border border-primary rounded-pill" style="background-color: #007FFF"><li
                                 class="nav-item">
-                                <a style="color: white" class="nav-link" href="{{ url_for('user.register') }}">Register</a>
+                                <a style="color: white" class="nav-link"
+                                   href="{{ url_for('user.register') }}">Register</a>
                             </li></span>
 
-                <span class="border border-primary rounded-pill mx-5"><li class="nav-item">
+                        <span class="border border-primary rounded-pill mx-5"><li class="nav-item">
                                 <a style="color:#007FFF" class="nav-link"
                                    href="{{ url_for('user.login') }}">Login</a>
                             </li></span>
-            </ul>
-        </div>
-    </div>
+                    </ul>
+                </div>
+            </div>
     </div>
 {% endif %}
 </nav>
@@ -87,7 +88,11 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous">
 </script>
-{% block content %}{% endblock %}
+<script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous"></script>
+    {% block content %}{% endblock %}
 
-</body>
-</html>
+    </body>
+    </html>

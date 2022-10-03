@@ -94,11 +94,13 @@
                         <a href="">Bootply Profile</a>
                         <p>SKILLS</p>
                         {% if user_info.skills %}
-                            {% for info in user_info.skills.split() %}
-                                <ul>
-                                    <li><a href="">{{ user_info.skills }}</a><br/></li>
-                                </ul>
+                            <ul style="padding:0;">
+                            {% for info in user_info.skills.split(',') %}
+
+                                    <li><a href="">{{ info }}</a><br/></li>
+
                             {% endfor %}
+                                </ul>
                         {% endif %}
 
 
