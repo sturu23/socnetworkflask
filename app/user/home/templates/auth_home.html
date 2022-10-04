@@ -109,14 +109,16 @@
                                     </div>
                                     <div class="media-body">
                                         <p class="m-0">
-
-                                            <a href="{{ url_for('profile.user_profile',user_id=data[i].user_id) }}"
+                                            {% if data[i].user_id == current_user.id %}
+                                            <a href="{{ url_for('profile.profile',user_id=data[i].user_id) }}"
                                                method="post">{{ data[i].username|capitalize }}</a>
-
+                                            {% else %}
+                                                <a href="{{ url_for('profile.user_profile',user_id=data[i].user_id) }}"
+                                               method="post">{{ data[i].username|capitalize }}</a>
+                                            {% endif %}
 
                                         </p>
                                         <small><span>
-
                                                 {% if data[i].edited == None %}
                                                 <i class="icon ion-md-time"></i>Posted: {{ data[i].created_post_date.date().strftime("%B,%d,%Y") }}
                                                 {% else %}
@@ -158,6 +160,16 @@
                                             <i class="fa-regular fa-comment"></i>
                                             No Comments</a>
                                     {% endif %}
+                                    <br>
+                                    Liked By:<a style='display:block' href="#">
+
+                                    {% if data[i].likes %}
+                                        {% for liked_by in data[i].likes %}
+                                            {{ liked_by.user.username }}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </a>
+
 
 
                                 </p>

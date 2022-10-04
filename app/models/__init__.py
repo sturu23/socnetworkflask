@@ -12,9 +12,9 @@ class User(db.Model,UserMixin):
     secret = db.Column(db.String(128))
     profile_pic = db.Column(db.String(20), nullable=True)
     account_created_time = db.Column(db.DateTime,default=datetime.utcnow)
-    likes = db.relationship('Likes',backref='user',passive_deletes=True)
-    comments = db.relationship('Comments',backref='user',passive_deletes=True)
-    post = db.relationship('Statia',backref='post',passive_deletes=True)
+    likes = db.relationship('Likes',backref='user-likes',passive_deletes=True,viewonly=True)
+    comments = db.relationship('Comments',backref='user',passive_deletes=True,viewonly=True)
+    post = db.relationship('Statia',backref='post',passive_deletes=True,viewonly=True)
 
     def __init__(self, username, email, password,secret,profile_pic,likes,comments):
         self.profile_pic = profile_pic
@@ -84,6 +84,7 @@ class Likes(db.Model,UserMixin):
     id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete="CASCADE"),nullable=False)
     post_id = db.Column(db.Integer,db.ForeignKey('statia.id',ondelete="CASCADE"),nullable=False)
+    user = db.relationship('User',backref='liker')
 
 class Comments(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)

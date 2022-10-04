@@ -17,6 +17,11 @@ def create():
     data = []
     post = Statia.query.all()
     comments = Comments.query.all()
+    liked_by = []
+
+    for i in post:
+        for j in i.likes:
+            print(j.user.username)
 
     if form.validate_on_submit():
         content = form.content.data
@@ -35,12 +40,13 @@ def create():
             'user_img': i.user.profile_pic,
             'comments': i.comments,
             'likes': i.likes,
+            'edited':i.edited,
             'created_post_date': i.created_post_date,
 
         })
 
 
-    return render_template('auth_home.html', form=form, data=data, users=users, post=post, comments=comments)
+    return render_template('auth_home.html', form=form, data=data, users=users, comments=comments)
 
 
 @auth_home_blueprint.route('/delete-post/<post_id>', methods=['GET'])
@@ -146,3 +152,4 @@ def edit_comment(comment_id):
         db.session.commit()
 
     return redirect(url_for('auth_home.create'))
+
