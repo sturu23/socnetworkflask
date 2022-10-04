@@ -16,14 +16,13 @@ class User(db.Model,UserMixin):
     comments = db.relationship('Comments',backref='user',passive_deletes=True,viewonly=True)
     post = db.relationship('Statia',backref='post',passive_deletes=True,viewonly=True)
 
-    def __init__(self, username, email, password,secret,profile_pic,likes,comments):
+    def __init__(self, username, email, password,secret,profile_pic):
         self.profile_pic = profile_pic
         self.username = username
         self.email = email
         self.password_hash = generate_password_hash(password)
         self.secret = secret
-        self.likes = likes
-        self.comments = comments
+
 
 
     def check_password(self, password):
@@ -52,10 +51,10 @@ class Statia(db.Model,UserMixin):
     likes = db.relationship('Likes', backref='statia', passive_deletes=True)
     comments = db.relationship('Comments', backref='statia',uselist=True, passive_deletes=True)
     user = db.relationship('User', backref=db.backref('statia', lazy=True))
-    def __init__(self,content,user_id,edited):
+    def __init__(self,content,user_id):
         self.content = content
         self.user_id = user_id
-        self.edited = edited
+
 
 
 

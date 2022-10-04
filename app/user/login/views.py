@@ -34,7 +34,7 @@ def register():
             flash('მეილი უკვე არსებობს')
             return redirect(url_for('user.register'))
 
-        user = User(username=username,email=email,password=password,secret=secret,profile_pic='img/defaultavatar.jpg')
+        user = User(username=username,email=email,password=password,secret=secret,profile_pic='img/514-5147412_default-avatar-icon.png')
         db.session.add(user)
         db.session.commit()
         flash('რეგისტრაცია წარმატებით დასრულდა')
